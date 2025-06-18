@@ -1,0 +1,3 @@
+echo "Checking before committing..."
+npm run typecheck
+pnpm dlx lint-staged
