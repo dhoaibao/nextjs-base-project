@@ -10,6 +10,7 @@ interface RequestOptions {
   useFormData?: boolean;
   pathParams?: Record<string, string | number>;
   queryParams?: Record<string, string | number>;
+  timeout?: number;
 }
 
 export async function request<T, D = unknown>(config: {
@@ -20,7 +21,7 @@ export async function request<T, D = unknown>(config: {
 }): Promise<T> {
   try {
     const { method, endpoint, data, options } = config;
-    const { headers = {}, useFormData = false, pathParams, queryParams } = options || {};
+    const { headers = {}, useFormData = false, pathParams, queryParams, timeout } = options || {};
 
     const url = compileParamToUrl(endpoint, pathParams);
 
@@ -30,6 +31,7 @@ export async function request<T, D = unknown>(config: {
       params: filterQueryParams(queryParams),
       headers,
       data: useFormData ? ObjectToFormData(data as FormDataParams) : data,
+      timeout,
     };
 
     const response: AxiosResponse<T> = await axiosInstance.request(requestConfig);
