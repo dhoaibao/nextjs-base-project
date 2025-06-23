@@ -2,8 +2,14 @@ import { Layout } from 'antd';
 
 const { Footer: AntdFooter } = Layout;
 
-const Footer = () => {
-  return <AntdFooter> B-Shoes ©{new Date().getFullYear()} Created by Duong Hoai Bao</AntdFooter>;
+const FooterComponent = () => {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <AntdFooter className="text-center">
+      Admin Dashboard ©{currentYear} Created by Duong Hoai Bao
+    </AntdFooter>
+  );
 };
 
-export default Footer;
+export default FooterComponent;

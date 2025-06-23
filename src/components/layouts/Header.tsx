@@ -1,27 +1,35 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Layout } from 'antd';
+import { SquareChevronLeft, SquareChevronRight } from 'lucide-react';
+
 const { Header } = Layout;
 
-const HeaderComponent = ({
-  collapsed,
-  setCollapsed,
-  colorBgContainer,
-}: {
+interface HeaderComponentProps {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
   colorBgContainer: string;
-}) => {
+}
+
+const HeaderComponent = ({ collapsed, setCollapsed, colorBgContainer }: HeaderComponentProps) => {
+  const handleCollapseToggle = () => setCollapsed(!collapsed);
+
+  const headerStyle = {
+    padding: 0,
+    background: colorBgContainer,
+  };
+
+  const buttonStyle = {
+    fontSize: '16px',
+    width: 64,
+    height: 64,
+  };
+
   return (
-    <Header style={{ padding: 0, background: colorBgContainer }}>
+    <Header style={headerStyle}>
       <Button
         type="text"
-        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        onClick={() => setCollapsed(!collapsed)}
-        style={{
-          fontSize: '16px',
-          width: 64,
-          height: 64,
-        }}
+        icon={collapsed ? <SquareChevronRight /> : <SquareChevronLeft />}
+        onClick={handleCollapseToggle}
+        style={buttonStyle}
       />
     </Header>
   );

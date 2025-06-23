@@ -1,33 +1,58 @@
 import { Layout, Menu } from 'antd';
-import { UserOutlined, VideoCameraOutlined, UploadOutlined } from '@ant-design/icons';
+import { LayoutDashboard, Package, User, List } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useThemeStore } from '@src/stores/theme';
 
 const { Sider } = Layout;
 
-const SideBarComponent = ({ collapsed }: { collapsed: boolean }) => {
+interface SideBarComponentProps {
+  collapsed: boolean;
+}
+
+const menuItems = [
+  {
+    key: 'dashboard',
+    icon: <LayoutDashboard />,
+    label: 'Dashboard',
+  },
+  {
+    key: 'products-management',
+    icon: <Package />,
+    label: 'Products Management',
+    children: [
+      {
+        key: 'products',
+        icon: <List />,
+        label: 'List Products',
+      },
+    ],
+  },
+  {
+    key: 'users',
+    icon: <User />,
+    label: 'Users',
+  },
+];
+
+const SideBarComponent = ({ collapsed }: SideBarComponentProps) => {
+  const theme = useThemeStore()(state => state.theme);
+  const router = useRouter();
+
+  const handleMenuClick = ({ key }: { key: string }) => {
+    router.push(`/${key}`);
+  };
+
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed}>
-      <div className="demo-logo-vertical" />
+    <Sider width={250} trigger={null} collapsible collapsed={collapsed}>
+      <div className="h-16 m-4 bg-gray-700 rounded-lg flex items-center justify-center">
+        <div className="text-white font-bold text-lg">{collapsed ? 'A' : 'Admin'}</div>
+      </div>
       <Menu
-        theme="dark"
+        theme={theme}
         mode="inline"
-        defaultSelectedKeys={['1']}
-        items={[
-          {
-            key: '1',
-            icon: <UserOutlined />,
-            label: 'nav 1',
-          },
-          {
-            key: '2',
-            icon: <VideoCameraOutlined />,
-            label: 'nav 2',
-          },
-          {
-            key: '3',
-            icon: <UploadOutlined />,
-            label: 'nav 3',
-          },
-        ]}
+        defaultSelectedKeys={['dashboard']}
+        onClick={handleMenuClick}
+        items={menuItems}
       />
     </Sider>
   );
