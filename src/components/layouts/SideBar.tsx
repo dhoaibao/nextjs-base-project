@@ -2,6 +2,7 @@ import { Layout, Menu } from 'antd';
 import { LayoutDashboard, Package, User, List } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useThemeStore } from '@src/stores/theme';
+import { usePathname } from 'next/navigation';
 
 const { Sider } = Layout;
 
@@ -37,6 +38,9 @@ const menuItems = [
 const SideBarComponent = ({ collapsed }: SideBarComponentProps) => {
   const theme = useThemeStore()(state => state.theme);
   const router = useRouter();
+  const pathname = usePathname();
+
+  const defaultSelectedKeys = pathname.split('/').filter(Boolean) || ['dashboard'];
 
   const handleMenuClick = ({ key }: { key: string }) => {
     router.push(`/${key}`);
@@ -50,7 +54,7 @@ const SideBarComponent = ({ collapsed }: SideBarComponentProps) => {
       <Menu
         theme={theme}
         mode="inline"
-        defaultSelectedKeys={['dashboard']}
+        defaultSelectedKeys={defaultSelectedKeys}
         onClick={handleMenuClick}
         items={menuItems}
       />
