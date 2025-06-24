@@ -47,7 +47,7 @@ const SideBarComponent = ({ collapsed }: SideBarComponentProps) => {
   };
 
   return (
-    <Sider width={250} trigger={null} collapsible collapsed={collapsed}>
+    <Sider width={250} trigger={null} theme={theme} collapsible collapsed={collapsed}>
       <div className="h-16 m-4 bg-gray-700 rounded-lg flex items-center justify-center">
         <div className="text-white font-bold text-lg">{collapsed ? 'A' : 'Admin'}</div>
       </div>
